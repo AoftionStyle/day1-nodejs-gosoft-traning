@@ -1,0 +1,27 @@
+<html>
+<head></head>
+<script>
+    function httpGetAsync(theUrl, callback) {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function () {
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+                var json = JSON.parse(xmlHttp.responseText);
+                callback(json);
+        }
+        xmlHttp.open("GET", theUrl, true); // true for asynchronous 
+        xmlHttp.send();
+    }
+    function getUser() {
+        var user = document.getElementById('user');
+
+        httpGetAsync('/user/0', function (userInformation) {
+            user.innerText = userInformation.name;
+        });
+    }
+</script>
+<body>
+    <div id='user'>User: ?</div>
+    <br/>
+    <button onclick='getUser()'>Get User</button>
+</body>
+</html>

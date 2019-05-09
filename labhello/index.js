@@ -23,8 +23,11 @@ app.get('/', (req, res) => {
 app.listen(port, () => console.log(`Example app listenin on port ${port}!`)) */
 
 const express = require('express')
+const bodyParser = require('body-parser')
 const app = express();
-const port = 3000;
+const port = 3001;
+
+app.use(bodyParser.json())
 
 /* 
 app.get('/user/:id', (req, res, next) => {
@@ -43,7 +46,7 @@ app.get('/user/:id', (req, res) => {
 })
 */
 
-
+/* 
 // practice success user add and remove
 app.get('/user/add/:id', (req, res, next) => {
     console.log('req.params.id:', req.params.id);
@@ -89,10 +92,22 @@ app.get('/:id', (req, res, next) => {
   res.end('this function is in first app.get')
 })
 
-app.get('/:id', (req, res) => {
-  res.send('Hello '+ req.params.id)
+// app.get('/:id', (req, res) => {
+//   res.send('Hello '+ req.params.id)
+// })
+ */
+
+app.use(express.static('public'));
+app.get('/user/:id', function (req, res) {
+  var user = {name: 'Nok Sithisak'};
+
+  res.send(JSON.stringify(user));
+});
+
+app.post('/aof', (req, res) => {
+  let body = req.body;
+  console.log(body);
+  res.send(body);
 })
 
-
 app.listen(port, () => console.log(`Example app listenin on port ${port}!`))
-
